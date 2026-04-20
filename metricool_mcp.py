@@ -165,5 +165,9 @@ async def get_facebook_posts(blog_id: int, init_date: str, end_date: str) -> str
         return _handle_error(e)
 
 if __name__ == "__main__":
+    from mcp.server.transport_security import TransportSecuritySettings
     port = int(os.environ.get("PORT", 8000))
-    mcp.run(transport="streamable-http", host="0.0.0.0", port=port)
+    mcp.settings.transport_security = TransportSecuritySettings(enable_dns_rebinding_protection=False)
+    mcp.settings.host = "0.0.0.0"
+    mcp.settings.port = port
+    mcp.run(transport="streamable-http")
